@@ -146,7 +146,7 @@ public class FoodController {
     }
 
     @GetMapping("/available")
-    public List<FoodListing> getAvailableFood() {
-        return foodRepository.findByStatus(Status.AVAILABLE);
+    public List<FoodResponse> getAvailableFood() {
+        return foodRepository.findByStatus(Status.AVAILABLE).stream().map(this::mapToFoodResponse).toList();
     }
 }

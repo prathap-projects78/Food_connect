@@ -1,13 +1,211 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <title>Food Connect | Share & Care</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <!-- Background Animated Shapes -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    
+    <div id="app">
+      <!-- Top Navigation -->
+      <header class="glass-header">
+        <div class="logo">
+          <i class="ri-restaurant-line"></i>
+          <h1>Food Connect</h1>
+        </div>
+        <div id="user-info" style="display: none;">
+          <div class="user-badge">
+            <i class="ri-user-smile-line"></i>
+            <span id="welcome-message"></span>
+          </div>
+          <button id="btn-logout" class="btn btn-outline">
+            <i class="ri-logout-box-r-line"></i> Logout
+          </button>
+        </div>
+      </header>
+
+      <main class="container">
+        <!-- Auth View -->
+        <section id="auth-section" class="fade-in">
+          <div class="auth-container">
+            <!-- Auth Toggle -->
+            <div class="auth-tabs">
+              <button class="auth-tab active" id="tab-login">Login</button>
+              <button class="auth-tab" id="tab-register">Register</button>
+            </div>
+
+            <div class="glass-card auth-card" id="card-login">
+              <div class="card-header">
+                <h2>Welcome Back</h2>
+                <p>Login to continue making a difference</p>
+              </div>
+              <form id="login-form">
+                <div class="input-group">
+                  <i class="ri-mail-line"></i>
+                  <input type="email" id="login-email" placeholder="Email Address" required />
+                </div>
+                <div class="input-group">
+                  <i class="ri-lock-line"></i>
+                  <input type="password" id="login-password" placeholder="Password" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                  <span>Login</span> <i class="ri-arrow-right-line"></i>
+                </button>
+              </form>
+              <p id="login-error" class="error-msg"></p>
+            </div>
+
+            <div class="glass-card auth-card hidden" id="card-register">
+              <div class="card-header">
+                <h2>Join the Cause</h2>
+                <p>Create an account to start sharing or receiving</p>
+              </div>
+              <form id="register-form">
+                <div class="input-group">
+                  <i class="ri-user-line"></i>
+                  <input type="text" id="reg-name" placeholder="Full Name or Organization" required />
+                </div>
+                <div class="input-group">
+                  <i class="ri-mail-line"></i>
+                  <input type="email" id="reg-email" placeholder="Email Address" required />
+                </div>
+                <div class="input-group">
+                  <i class="ri-lock-line"></i>
+                  <input type="password" id="reg-password" placeholder="Password" required />
+                </div>
+                <div class="input-group">
+                  <i class="ri-map-pin-line"></i>
+                  <input type="text" id="reg-address" placeholder="Physical Address" required />
+                </div>
+                <div class="input-group">
+                  <i class="ri-phone-line"></i>
+                  <input type="text" id="reg-contact" placeholder="Contact Number" required />
+                </div>
+                <div class="input-group select-group">
+                  <i class="ri-function-line"></i>
+                  <select id="reg-role">
+                    <option value="RESTAURANT">I am a Restaurant</option>
+                    <option value="TRUST">I am a Trust / NGO</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">
+                  <span>Register</span> <i class="ri-user-add-line"></i>
+                </button>
+              </form>
+              <p id="register-error" class="error-msg"></p>
+              <p id="register-success" class="success-msg"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Restaurant View -->
+        <section id="restaurant-section" class="dashboard-section fade-in" style="display: none;">
+          <div class="dashboard-grid">
+            <div class="dashboard-sidebar">
+              <div class="glass-card">
+                 <div class="card-header">
+                   <h2><i class="ri-add-circle-line"></i> Add Food</h2>
+                   <p>Share surplus food with those in need</p>
+                 </div>
+                 <form id="add-food-form">
+                   <div class="input-group">
+                     <i class="ri-restaurant-line"></i>
+                     <input type="text" id="food-name" placeholder="Food Name (e.g. 50 Meals)" required />
+                   </div>
+                   <div class="input-group">
+                     <i class="ri-group-line"></i>
+                     <input type="number" id="food-quantity" placeholder="Quantity (People)" required />
+                   </div>
+                   <div class="input-group">
+                     <i class="ri-calendar-line"></i>
+                     <input type="date" id="food-expiry" required />
+                   </div>
+                   <button type="submit" class="btn btn-primary btn-full">
+                     Donate Food
+                   </button>
+                 </form>
+                 <p id="add-food-message"></p>
+              </div>
+            </div>
+
+            <div class="dashboard-content">
+               <div class="glass-card">
+                 <div class="card-header-flex">
+                   <div>
+                     <h2><i class="ri-list-check"></i> My Food Listings</h2>
+                     <p>Manage your shared food</p>
+                   </div>
+                   <button id="btn-refresh-rest-food" class="btn btn-icon btn-secondary" title="Refresh">
+                     <i class="ri-refresh-line"></i>
+                   </button>
+                 </div>
+                 <div id="rest-food-list" class="list-container"></div>
+               </div>
+               
+               <div class="glass-card">
+                 <div class="card-header-flex">
+                   <div>
+                     <h2><i class="ri-hand-heart-line"></i> Incoming Requests</h2>
+                     <p>Trusts requesting your food</p>
+                   </div>
+                   <button id="btn-refresh-rest-requests" class="btn btn-icon btn-secondary" title="Refresh">
+                     <i class="ri-refresh-line"></i>
+                   </button>
+                 </div>
+                 <div id="rest-requests-list" class="list-container"></div>
+               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Trust View -->
+        <section id="trust-section" class="dashboard-section fade-in" style="display: none;">
+          <div class="dashboard-grid">
+            <div class="dashboard-content">
+              <div class="glass-card">
+                <div class="card-header-flex">
+                  <div>
+                    <h2><i class="ri-restaurant-2-line"></i> Available Food</h2>
+                    <p>Discover food shared by restaurants nearby</p>
+                  </div>
+                  <button id="btn-refresh-avail-food" class="btn btn-icon btn-secondary" title="Refresh">
+                    <i class="ri-refresh-line"></i>
+                  </button>
+                </div>
+                <div id="avail-food-list" class="list-container"></div>
+                <p id="avail-food-message"></p>
+              </div>
+            </div>
+
+            <div class="dashboard-sidebar">
+              <div class="glass-card">
+                <div class="card-header-flex">
+                  <div>
+                    <h2><i class="ri-history-line"></i> My Requests</h2>
+                    <p>Track statuses</p>
+                  </div>
+                  <button id="btn-refresh-trust-requests" class="btn btn-icon btn-secondary" title="Refresh">
+                    <i class="ri-refresh-line"></i>
+                  </button>
+                </div>
+                <div id="trust-requests-list" class="list-container"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

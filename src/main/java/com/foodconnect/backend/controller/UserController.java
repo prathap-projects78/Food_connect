@@ -30,4 +30,9 @@ public class UserController {
         }
         throw new RuntimeException("Invalid credentials");
     }
+
+    @GetMapping("/all")
+    public java.util.List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }
